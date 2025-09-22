@@ -11,7 +11,7 @@ import SwiftUI
 struct NHL_TrackerApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            TrackerHomeView()
         }
     }
 }
