@@ -9,9 +9,19 @@ import Foundation
 
 class NetworkManager {
     private let baseURL = "https://api.nhle.com/"
+    private let teamURL = "https://api-web.nhle.com/"
     
     func getTeams() async throws -> String {
-        guard let url = URL(string: baseURL + "stats/rest/en/team") else {
+        return try await makeTheCall(url: baseURL + "stats/rest/en/team")
+    }
+    
+    func getTeamStats(teamCode:String) async throws -> String {
+        return try await makeTheCall(url: teamURL + "v1/club-stats/\(teamCode)/now")
+    }
+    
+    
+    private func makeTheCall(url:String) async throws -> String {
+        guard let url = URL(string:url) else {
             throw URLError(.badURL)
         }
 

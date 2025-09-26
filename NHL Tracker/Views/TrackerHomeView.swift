@@ -12,21 +12,35 @@ struct TrackerHomeView: View {
     
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            // Button to load teams
             Button(action: {
                 Task {
                     await viewModel.GetTeamsData()
                 }
             }) {
                 Text("Get Teams")
+                    .font(.headline)
+            }
+            .padding()
+
+            // List of teams
+            List(viewModel.nhlTeams, id: \.id) { team in
+                HStack {
+//                    Text(team.fullName)
+//                    Spacer()
+                    Button(team.fullName) {
+                           Task {
+                               await viewModel.getDataForTeam(for: team)
+                           }
+                       }
+                    .buttonStyle(BorderlessButtonStyle()) // Required for buttons inside lists
+                }
             }
         }
         .padding()
     }
 }
+
 
 #Preview {
     TrackerHomeView()
